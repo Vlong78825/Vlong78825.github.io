@@ -1,0 +1,56 @@
+<div>
+  <button nz-button nzType="vertical" (click)="showModal()"><span>Thêm </span></button>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm tỉnh thành" (nzOnCancel)="handleCancel()" (nzOnOk)="handleAdd()">
+    <ng-container *nzModalContent>
+      <p> <input nz-input placeholder="Thành Phố" [(ngModel)]="thanhpho"/></p>
+      <p> <input nz-input placeholder="Quận Huyện" [(ngModel)]="quanhuyen" /></p>
+      <p> </p>
+    </ng-container>
+  </nz-modal>  
+</div>
+
+<div><nz-modal [(nzVisible)]="isVisible2" nzTitle="Edit tỉnh thành" (nzOnCancel)="handleCancel2()" (nzOnOk)="handlePut()">
+  <ng-container *nzModalContent>
+  <p> <input nz-input [placeholder]="thanhpho" [(ngModel)]="thanhpho"/></p>
+  <p> <input nz-input [placeholder]="quanhuyen" [(ngModel)]="quanhuyen" /></p>
+  <p> </p>
+  </ng-container>
+</nz-modal>
+</div>
+
+<div>
+  <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
+    <thead>
+      <tr>
+        <th nzCustomFilter>
+          Tên Thành Phố
+          <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+            <span nz-icon nzType="search"></span>
+          </nz-filter-trigger>
+        </th>
+        <th>Tên Quận Huyện</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of nzTable.data">
+        <td>{{ data.thanhPho }}</td>
+        <td>{{ data.quanHuyen }}</td>
+        <td><a (click) ="handleDel(data.id)">Xóa</a><nz-divider nzType="vertical"></nz-divider>
+          <a (click) ="showModal2(data.id,data.thanhPho,data.quanHuyen)">Sửa</a>
+      </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Tìm kiếm</button>
+        <button nz-button nzSize="small" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+</div>
+
+  
