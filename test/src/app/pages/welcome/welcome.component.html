@@ -34,10 +34,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of nzTable.data">
-        <td>{{ data.thanhPho }}</td>
-        <td>{{ data.quanHuyen }}</td>
-        <td><a (click) ="handleDel(data.id)">Xóa</a><nz-divider nzType="vertical"></nz-divider>
-          <a (click) ="showModal2(data.id,data.thanhPho,data.quanHuyen)">Sửa</a>
+        <td>{{ data.tenThanhPho }}</td>
+        <td>{{ data.tenQuanHuyen }}</td>
+        <td><a (click) ="handleDel(data.id,data.thanhPhoId)">Xóa</a><nz-divider nzType="vertical"></nz-divider>
+          <a (click) ="showModal2(data.id,data.tenQuanHuyen,data.tenThanhPho,data.thanhPhoId)">Sửa</a>
       </td>
       </tr>
     </tbody>
