@@ -17,6 +17,7 @@ namespace WebApplication1.Repository
 
         public ThanhPho CreateThanhPho(ThanhPhoDTO thanhPho)
         {
+
             var data = new ThanhPho()
             { Id = thanhPho.Id,
                 TenThanhPho = thanhPho.TenThanhPho,

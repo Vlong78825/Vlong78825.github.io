@@ -11,9 +11,11 @@ using WebApplication1.Interfaces;
 using WebApplication1.Repository;
 using AutoMapper;
 using WebApplication1.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ThanhPhosController : ControllerBase

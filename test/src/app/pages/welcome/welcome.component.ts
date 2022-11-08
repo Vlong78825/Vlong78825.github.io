@@ -4,6 +4,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import { Data } from '@angular/router';
+import { toArray } from 'rxjs';
+
 
 interface Person {
   thanhpho: string;
@@ -35,12 +37,16 @@ export class WelcomeComponent implements OnInit {
   searchValue = '';
   visible = false;
   listOfDisplayData = [...this.TinhThanhList];
+  login =false;
+  passwordVisible=false;
+  username?: string;
+  password?: string;
 
   ngOnInit() {
     this.refreshTinhThanhList();
   }
   refreshTinhThanhList() {
-    this.service.getTinhThanh().subscribe(data => { this.TinhThanhList = data,this.search() })
+    this.service.getTinhThanh().subscribe(data => { this.TinhThanhList = data,this.search()})
   }
 
   showModal(): void {
@@ -72,7 +78,9 @@ export class WelcomeComponent implements OnInit {
     var tp = { id:this.thanhphoid,tenThanhPho: this.thanhpho };
     this.service.postThanhPho(tp).subscribe(any =>{      
       this.service.getThanhPhoByTen(this.thanhpho).subscribe(data=> {
-        var qh = { id:this.id,tenQuanHuyen: this.quanhuyen, thanhPhoId:data.id };
+        var qh = { id:0,tenQuanHuyen: this.quanhuyen, thanhPhoId: data.id };
+        console.log(qh)
+        console.log(data)
         this.service.postQuanHuyen(qh).subscribe(()=> {
           this.refreshTinhThanhList();} )
       })
@@ -104,6 +112,28 @@ export class WelcomeComponent implements OnInit {
   search(): void {
     this.visible = false;
     this.listOfDisplayData = this.TinhThanhList.filter((item: any) => item.tenThanhPho.indexOf(this.searchValue) !== -1);
+  }
+
+  handlelogin(){
+    var login = {username:this.username,password:this.password}
+    this.service.postLogin(login).subscribe(data => {
+      localStorage.setItem('token',data.token);
+      this.login =true;
+      this.refreshTinhThanhList();
+      this.username='';
+      this.password='';
+  })
+    console.log(localStorage.getItem('token'))   
+  }
+  handlelogout(){
+    localStorage.setItem('token','');
+    this.login =false;
+  }
+  handleloginadd(){
+    var add={username:this.username,password:this.password}
+    this.service.postLoginAdd(add).subscribe(res => console.log(res)
+    )
+    
   }
 }
 

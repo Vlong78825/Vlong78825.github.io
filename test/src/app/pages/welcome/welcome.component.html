@@ -1,4 +1,9 @@
-<div>
+<!-- Logout -->
+<div style= "text-align :right; " *ngIf="login"> 
+  <button nz-button nzType="vertical" (click)="handlelogout()"><span>Logout </span></button>
+</div>
+<!-- Add Modal -->
+<div *ngIf="login">
   <button nz-button nzType="vertical" (click)="showModal()"><span>Thêm </span></button>
   <nz-modal [(nzVisible)]="isVisible" nzTitle="Thêm tỉnh thành" (nzOnCancel)="handleCancel()" (nzOnOk)="handleAdd()">
     <ng-container *nzModalContent>
@@ -8,8 +13,8 @@
     </ng-container>
   </nz-modal>  
 </div>
-
-<div><nz-modal [(nzVisible)]="isVisible2" nzTitle="Edit tỉnh thành" (nzOnCancel)="handleCancel2()" (nzOnOk)="handlePut()">
+<!-- Edit Modal -->
+<div *ngIf="login"><nz-modal [(nzVisible)]="isVisible2" nzTitle="Edit tỉnh thành" (nzOnCancel)="handleCancel2()" (nzOnOk)="handlePut()">
   <ng-container *nzModalContent>
   <p> <input nz-input [placeholder]="thanhpho" [(ngModel)]="thanhpho"/></p>
   <p> <input nz-input [placeholder]="quanhuyen" [(ngModel)]="quanhuyen" /></p>
@@ -17,8 +22,8 @@
   </ng-container>
 </nz-modal>
 </div>
-
-<div>
+<!-- Table -->
+<div *ngIf="login">
   <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed">
     <thead>
       <tr>
@@ -51,6 +56,39 @@
       </div>
     </div>
   </nz-dropdown-menu>
+</div>
+<!-- Login -->
+<div *ngIf="!login">
+  <div class="center-box"> 
+    <div class="example-input">
+    <input nz-input placeholder="Tên đăng nhập" [(ngModel)]="username" nzSize="default" (keyup.enter)="handlelogin()" />    
+    <br />
+    <nz-input-group  [nzSuffix]="suffixTemplate">
+      <input
+        [type]="passwordVisible ? 'text' : 'password'"
+        nz-input
+        placeholder="Mật Khẩu"
+        [(ngModel)]="password"
+        nzSize="default"
+        (keyup.enter)="handlelogin()"
+      />
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <span
+        nz-icon
+        [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+        (click)="passwordVisible = !passwordVisible"
+      ></span>
+    </ng-template>
+  </div> 
+  <div > 
+    <button nz-button nzType="vertical"  (click)="handleloginadd()"><span>Đăng kí </span></button> 
+    <nz-divider nzType="vertical"></nz-divider><nz-divider nzType="vertical"></nz-divider>
+    <button nz-button nzType="vertical" (click)="handlelogin()"><span>Đăng nhập </span></button> 
+  </div>
+
+ </div>
+  
 </div>
 
   

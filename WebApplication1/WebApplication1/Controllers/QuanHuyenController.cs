@@ -11,9 +11,11 @@ using WebApplication1.Interfaces;
 using WebApplication1.Repository;
 using AutoMapper;
 using WebApplication1.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class QuanHuyenController : ControllerBase
@@ -111,11 +113,11 @@ namespace WebApplication1.Controllers
         {
             if (!ThanhPhoExists(dTO.ThanhPhoId))
             {
-                return BadRequest();
+                return BadRequest("thanh pho ko ton tai");
             }
             if(_context.QuanHuyens.Any(e => (e.ThanhPhoId==dTO.ThanhPhoId ) && (e.TenQuanHuyen== dTO.TenQuanHuyen))) 
             {
-                return BadRequest();
+                return BadRequest("trung quan huyen");
             }
             var data = _quanHuyenRepository.CreateQuanHuyen(dTO);
             var data2 = _mapper.Map<QuanHuyen>(data);
